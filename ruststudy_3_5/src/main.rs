@@ -16,10 +16,10 @@ fn main() {
         let temp: i32 = temp.trim().parse().expect("Please type a number!");
 
         let mut cf = String::new();
-        println!("次は変換する温度を入力してね。摂氏にしたいならC,華氏にしたいならF。");
+        println!("次は変換する温度を入力してね。華氏→摂氏にしたいならC,摂氏→華氏にしたいならF。");
 
         io::stdin().read_line(&mut cf).expect("Failed to read line"); // 行の読み込みに失敗しました
-        let _cf = match cf.as_str(){
+        let _cf = match cf.trim(){
             "C" => {
                 let temp = convert_f_to_c(temp);
                 println!{"摂氏{}度だよ",temp};
@@ -37,10 +37,10 @@ fn main() {
     }
 }
 
-fn convert_f_to_c(x: i32) -> i32 {
+fn convert_c_to_f(x: i32) -> i32 {
     x * 9 / 5 + 32
 }
 
-fn convert_c_to_f(x: i32) -> i32 {
+fn convert_f_to_c(x: i32) -> i32 {
     (x - 32) * 5 / 9
 }
