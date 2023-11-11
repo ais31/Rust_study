@@ -1,13 +1,19 @@
+
+
+
+use std::collections::HashMap;
+use std::cmp::Ordering;
+
 #[derive(Debug)]
 struct Matome1 {
     mean :f32,
     median :f32,
-    mode :f32,
+    mode :HashMap<i32,i32>,
 }
 
 impl Matome1 {
     fn new() -> Matome1 {
-        Matome1 {mean:0.0,median:0.0,mode:0.0}
+        Matome1 {mean:0.0,median:0.0,mode:HashMap::new()}
     }
 }
 
@@ -42,10 +48,29 @@ fn matome_calc_1(mut vec:Vec<i32>) -> Matome1{
     println!("{}",matome1.median.to_string() );
 
     //最頻値を求める
+    let mut map = HashMap::new();
+    for num in vec {
+        let count = map.entry(num).or_insert(0);
+        *count += 1;
+    }
+    let mut maxmap = HashMap::new();
+    let mut max = 0;
+    for record in  map{
+        match &record.1.cmp(&max){
+            Ordering::Greater => {
+                maxmap.clear();
+                maxmap.insert(record.0, record.1);
+                max = record.1;
+            },
+            Ordering::Equal => {
+                maxmap.insert(record.0, record.1);
 
-
-
-    
+            }
+            _ => (),
+        }
+    }
+    matome1.mode = maxmap;
+    println!("{:?}",matome1.mode );
 
     matome1
 
