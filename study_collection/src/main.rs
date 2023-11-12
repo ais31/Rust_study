@@ -4,7 +4,7 @@
 use std::collections::HashMap;
 use std::cmp::Ordering;
 
-#[derive(Debug)]
+
 struct Matome1 {
     mean :f32,
     median :f32,
@@ -20,12 +20,23 @@ impl Matome1 {
 fn main() {
     
     // let v: Vec<i32> = Vec::new();
-    let v: Vec<i32> = vec![1,8,3,6,5];
+    let v: Vec<i32> = vec![3,11,1,6,9,15,9];
+    println!("入力値は");
+    for input in &v {
+        print!("{},", input.to_string());
+    }
+    println!("です。");
 
     let matome1: Matome1 = matome_calc_1(v);
 
-    println!("計算結果は{:?}", matome1);
-}
+    println!("計算結果は");
+    println!("平均値：{}",matome1.mean.to_string());
+    println!("中央値：{}",matome1.median.to_string());
+    for mode_num in matome1.mode{
+        println!("最頻値：{},出現回数：{}回",mode_num.0.to_string(),mode_num.1.to_string());
+
+    }
+}   
 
 fn matome_calc_1(mut vec:Vec<i32>) -> Matome1{
     let mut matome1 = Matome1::new();
@@ -35,7 +46,6 @@ fn matome_calc_1(mut vec:Vec<i32>) -> Matome1{
         sum += *i as f32;
     }
     matome1.mean = sum / vec.len() as f32;
-    println!("{}",matome1.mean.to_string() );
 
     //中央値を求める
     vec.sort();
@@ -45,7 +55,6 @@ fn matome_calc_1(mut vec:Vec<i32>) -> Matome1{
     } else {
         matome1.median = vec[mid] as f32;
     }
-    println!("{}",matome1.median.to_string() );
 
     //最頻値を求める
     let mut map = HashMap::new();
@@ -70,8 +79,6 @@ fn matome_calc_1(mut vec:Vec<i32>) -> Matome1{
         }
     }
     matome1.mode = maxmap;
-    println!("{:?}",matome1.mode );
-
     matome1
 
 }
